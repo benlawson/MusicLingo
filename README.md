@@ -16,7 +16,6 @@ Print ( Lyrics (Both ( Artist ('Adele') ('Hello')))) -- this will print the lyri
 song s :: == any title of a song
 artist a :: == any music artist 
 number n :: == natural numbers 
-```
 
 term t ::==  
     + s 
@@ -35,4 +34,4 @@ formula f :: ==
 Statements:
 + Print (f)
 + Play  (f)
-
+```
