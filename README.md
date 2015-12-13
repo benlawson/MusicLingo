@@ -12,9 +12,11 @@ Print ( Lyrics ( 'Hello' ) ) --this will be print the lyrics to a song titled 'H
 ```
 Print ( Lyrics (Both ( Artist ('Adele') ('Hello')))) -- this will print the lyrics to Adele's "Hello"
 ```
+```
 song s :: == any title of a song
 artist a :: == any music artist 
 number n :: == natural numbers 
+```
 
 term t ::==  
     + s 
