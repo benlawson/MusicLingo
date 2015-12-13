@@ -12,20 +12,25 @@ Print ( Lyrics ( 'Hello' ) ) --this will be print the lyrics to a song titled 'H
 ```
 Print ( Lyrics (Both ( Artist ('Adele') ('Hello')))) -- this will print the lyrics to Adele's "Hello"
 ```
+song s :: == any title of a song
+artist a :: == any music artist 
+number n :: == natural numbers 
+
+term t ::==  
+    + s 
+    + | Artist (s) 
+    + | [ t ]
 
 
- 
-Expresions:
-+ Length (song)
-+ Lyrics (song)
-+ Interval (song start end)
-+ Style (song | artist) 
-+ Artist (song) 
-+ Element (word song) 
-+ [ word ]
-+ Both (Artist (song) (song)
+formula f :: ==
+    + Length (s)
+    + | Lyrics (s)
+    + | Interval (s n n)
+    + | Style (t) 
+    + | Element (w s) 
+    + | Both (Artist (song) (song)) 
 
 Statements:
-+ Print (expression)
-+ Play  (expression)
++ Print (f)
++ Play  (f)
 
