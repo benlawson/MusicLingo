@@ -13,25 +13,32 @@ Print ( Lyrics ( 'Hello' ) ) --this will be print the lyrics to a song titled 'H
 Print ( Lyrics (Both ( Artist ('Adele') ('Hello')))) -- this will print the lyrics to Adele's "Hello"
 ```
 ```
-song s :: == any title of a song
+song   s :: == any title of a song
 artist a :: == any music artist 
 number n :: == natural numbers 
 
-term t ::==  
-    + s 
-    + | Artist (s) 
-    + | [ t ]
+term   t ::==  
+       s 
+     | Artist (s) 
+     | [ t ]
 
 
 formula f :: ==
-    + Length (s)
-    + | Lyrics (s)
-    + | Interval (s n n)
-    + | Style (t) 
-    + | Element (w s) 
-    + | Both (Artist (song) (song)) 
+       Length (s)
+     | Lyrics (s)
+     | Interval (s n n)
+     | Style (t) 
+     | Element (w s) 
+     | Both (Artist (song) (song)) 
 
-Statements:
-+ Print (f)
-+ Play  (f)
+statement s :: ==
+       Print (f) s
+     | Play  (f) s
+     | 
+    
 ```
+
+How To use:
+The two statements, Print and Play, will either print to the screen information about the queries or play the information (audio), respectively. 
+
+The formulas are used to build up queries. These act upon terms, which are either a song or an artist. 
