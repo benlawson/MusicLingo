@@ -39,8 +39,9 @@ def artist_unwrapped (tokens, top = True):
 
 def tokenizeAndParse(s):
     s = s.lower()
-    tokens = re.split(r"(\s+|:=|print|play|\+|length|lyrics|interval|style|element|both|mode|sentiment|{|}|;|\[|\]|,|@|\$)", s)
+    tokens = re.split(r"(\s+|print|play|length|lyrics|interval|style|element|both|mode|sentiment|[A-z]*\s[A-z]*)", s)
     tokens = [t.lower() for t in tokens if not t.isspace() and not t == ""]
+    print(tokens)
     (p, tokens) =  statement(tokens)
    
     return p

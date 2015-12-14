@@ -1,7 +1,7 @@
 exec(open('parse.py').read())
-#exec(open('music.py').read())
+exec(open('music.py').read())
 exec(open('sentiment.py').read())
-from music import *
+#from music import *
 from collections import Counter
 
 Node = dict
@@ -96,5 +96,25 @@ def interpret(s):
     tokens = tokenizeAndParse(s)
     (env, o) = execStatement({}, tokens)
     return o
+
+def interact(s):
+    while True:
+        # Prompt the user for a query.
+        s = input('> ')
+        if s == ':quit':
+            break
+
+        # Parse and evaluate the query.
+        try: 
+            tokens = tokenizeAndParse(s)
+            if not tokens is None:
+                (env, o) = execStatement({}, tokens)
+                print o
+            else:
+                print("Unknown input.")
+        except TypeError:
+            print("Incorrect syntax.")
+ 
+
 
 #eof
