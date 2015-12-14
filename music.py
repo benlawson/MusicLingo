@@ -26,20 +26,39 @@ def search(term, noun='song', adjective='genre'):
             if noun in a and "http" in a:
                 target_page = a
                 break
+        
+        if adjective == 'lyrics': 
+           suffix = '/lyrics'
+        else: suffix = None
         #navigate to main page
-        req2 = urllib2.Request(target_page, headers=hdr)
-        print target_page
+        req2 = urllib2.Request(target_page + suffix, headers=hdr)
+        print target_page + suffix
         z = urllib2.urlopen(req2).read()
         soup = BeautifulSoup(z)
 
         #aquire information
+        #set search terms
+        no_link = False
         if adjective in ['styles', 'genre', 'genres']:
-            body = 'div'
+            tag = 'div'
+            attr = 'class'
+            query = adjective
+        elif adjective == 'moods':
+            tag = 'section'
+            attr = 'class'
+            query = adjective
         else:
-            body = 'section'
-        for genre in soup.find_all(body, {"class" : adjective}):
-            for text in genre.find_all('a'):
-                genre_list.append( (text.string.replace(' ','_')))
+            tag = 'p'
+            attr = 'id'
+            query = 'hidden_without_js' 
+            no_link = True
+
+        for genre in soup.find_all(tag, {attr : query}):
+            if no_link:
+                genre_list.append(genre.text)
+            if not no_link:
+                 for text in genre.find_all('a'):
+                    genre_list.append( (text.string.replace(' ','_')))
         
         #except:
         #this is exception catches two known cases: when the 'artist' string is non-ascii and when the artist does not appear on the website
