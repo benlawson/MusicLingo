@@ -20,7 +20,6 @@ number n :: == natural numbers
 term   t ::==  
        s 
      | Artist (s) 
-     | [ t ]
 
 
 formula f :: ==
