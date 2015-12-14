@@ -5,13 +5,32 @@
 
 The goal of this project is to create an easier way to manipultate music and query it. This language is built from using user-submitted data to allmusic.com. In the general, the expressions relate to lyrics. I hope to all a 'play' statement that will search for the song on YouTube or similar and play from that.
 
-Some sample queries I imagine:
+Some sample queries:
+
+Print a the most common word of a random song by Adele
 ```
-Print ( Lyrics ( 'Hello' ) ) --this will be print the lyrics to a song titled 'Hello'
+interpret('print ( mode ( lyrics ( adele ) ) ) ') 
+['had']
+
 ```
+Print the most common word in the song 'Hello' by Adele
 ```
-Print ( Lyrics (Both ( Artist ('Adele') ('Hello') ) ) ) -- this will print the lyrics to Adele's "Hello"
+interpret('print ( mode ( lyrics ( both ( artist ( adele hello ) ) ) ) )') 
+['you']
 ```
+
+Print the lengh of the song Hotline Bling
+```
+interpret('print ( length ( lyrics ( hotlinebling ) ) ) ')
+[373]
+```
+
+Print the 'personality' of the song Hotline Bling by Drake
+```
+interpret('print ( sentiment ( lyrics ( both ( artist ( adele hello ) ) ) ) )')
+[[u'Orderliness', u'Assertiveness', u'Excitement-seeking', u'Gregariousness']]
+```
+
 ```
 song   s :: == any title of a song
 artist a :: == any music artist 

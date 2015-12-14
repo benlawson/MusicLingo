@@ -104,10 +104,7 @@ def statement(tmp, top = True):
         return ('End', [])
     r = parse([\
         ('Print', ['print', '(' ,formula, ')', statement]),\
-        ('Print', ['print', '(' ,term, ')', statement]),\
-        ('Print', ['print', '(' ,lyrics, ')', statement]),\
         ('Play',  ['play' , '(' ,formula, ')', statement]),\
-        ('Play',  ['play' , '(' ,term, ')', statement]),\
         ('End', [])\
         ], tmp, top)
     if not r is None:

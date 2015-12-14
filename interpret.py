@@ -50,7 +50,6 @@ def evalFormula(env,f):
                 f = children[0]
                 f1 = evalLyrics(env, f)
                 return len(f1)  
-            
             elif label == 'Interval':
                 f1 = children[0]
                 f2 = children[1]
@@ -63,7 +62,7 @@ def evalFormula(env,f):
                 f1 = children[0]
                 v1 = evalLyrics(env, f1)
                 data = Counter(v1)
-                return data.most_common(1)[0][0]
+                return str(data.most_common(1)[0][0])
             elif label == 'Sentiment':
                 f1 = children[0]
                 v1 = evalLyrics(env, f1)
@@ -95,7 +94,6 @@ def execStatement(env, s):
 
 def interpret(s):
     tokens = tokenizeAndParse(s)
-    print tokens
     (env, o) = execStatement({}, tokens)
     return o
 
