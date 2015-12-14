@@ -34,18 +34,21 @@ Print the 'personality' of the song Hello by Adele
 ```
 
 ```
-song   s :: == any title of a song
-artist a :: == any music artist 
 number n :: == natural numbers 
-word   w :: == an English word
+word   w :: == an English word, song, or artist
 
-term   t ::==  
-       s 
-     | Artist (a) 
-     | Both (Artist a s ) 
+query  q ::==  
+       t
+     | Artist w
+     | q and q
+
+term t :: ==
+       w 
+     | Both (Artist w w)
 
 lyrics l  :: ==
-       Lyrics (t)
+       Lyrics (q)
+     | Lyrics (t) 
    
 formula f :: ==
        Length (l)
@@ -53,7 +56,7 @@ formula f :: ==
      | Element (w l) 
      | Mode (l) 
      | Sentiment (l) 
-     | Style (t) 
+     | Style (q) 
 
 statement S :: ==
        Print (f) S
@@ -66,11 +69,12 @@ How To use:
 The two statements, Print and Play, will either print to the screen information about the queries or play the information (audio), respectively. 
 
 Formulas to use:
-Length will return a number that represents the number of words in the song.
-Interval will return the lyrics between the two number inverals
++ Length will return a number that represents the number of words in the song.
++ Interval will return the lyrics between the two number inverals
++ Mode returns the most common word in a song
++ Sentiment uses IBM BlueMix Personality Insights to determine personality keywords to describe the song.
 
-Mode returns the most common word in a song
-Sentiment uses IBM BlueMix Personality Insights to determine personality keywords to describe the song.
+These formulas act on lyrics, which can be build from using a term. 
 
 The formulas are used to build up queries. These act upon terms, which are either a song or an artist. 
 
@@ -87,6 +91,6 @@ cd MusicLingo
 virtualenv musicenv
 source musicenv/bin/activate
 pip install -r requirements.txt
-wget http://people.bu.edu/balawson/key.txt
+wget http://people.bu.edu/balawson/key.txt #for IBM BlueMix credentials
 ```
 
