@@ -38,9 +38,11 @@ def artist_unwrapped (tokens, top = True):
 
 
 def tokenizeAndParse(s):
-    tokens = re.split(r"(\s+|:=|print|play|\+|length|lyrics|interval|style|element|both|{|}|;|\[|\]|,|@|\$)", s)
+    s = s.lower()
+    tokens = re.split(r"(\s+|:=|print|play|\+|length|lyrics|interval|style|element|both|mode|sentiment|{|}|;|\[|\]|,|@|\$)", s)
     tokens = [t.lower() for t in tokens if not t.isspace() and not t == ""]
     (p, tokens) =  statement(tokens)
+   
     return p
 
 def parse(seqs, tmp, top = True):
@@ -89,12 +91,21 @@ def term(tmp, top = True):
     if not r is None:
         return r
 
+def expression(tmp, top = True):
+    tokens = tmp[0:]
+    for x in [formula, term, lyrics]:
+        r = x(tokens)  
+        if not r is None:
+            return r
+
+
 def statement(tmp, top = True):
     if len(tmp) == 0:
         return ('End', [])
     r = parse([\
         ('Print', ['print', '(' ,formula, ')', statement]),\
         ('Print', ['print', '(' ,term, ')', statement]),\
+        ('Print', ['print', '(' ,lyrics, ')', statement]),\
         ('Play',  ['play' , '(' ,formula, ')', statement]),\
         ('Play',  ['play' , '(' ,term, ')', statement]),\
         ('End', [])\

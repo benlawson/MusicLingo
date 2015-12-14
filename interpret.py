@@ -72,19 +72,7 @@ def evalFormula(env,f):
                 f1 = children[0]
                 v1 = evalTerm(env, f1)
 
-    elif type(f) == Leaf:
-        if f == 'True':
-            return 'True'
-        if f == 'False':
-            return 'False'
-
-def evalExpression(env, s): # Useful helper function.
-    v1 = evalTerm(env, s)
-    if v1:
-        return v1
-    else: return (evalFormula(env,s))
-
-def execProgram(env, s):
+def execStatement(env, s):
     if type(s) == Leaf:
         if s == 'End':
             return (env, [])
@@ -93,64 +81,22 @@ def execProgram(env, s):
             if label == 'Print':
                 children = s[label]
                 f = children[0]
-                p = children[1]
+                S = children[1]
                 v = evalFormula(env, f)
-                if not(v):
-                    v = evalTerm(env, f)
-                (env, o) = execProgram(env, p)
+                (env, o) = execStatement(env, S)
                 return (env, [v] + o)
-            if label == 'Assign':
+            if label == 'Play':
                 children = s[label]
-                x = children[0]['Variable'][0]
-                f = children[1]
-                p = children[2]
-                v = evalExpression(env, f)
-                env[x] = v
-                (env, o) = execProgram(env, p)
+                f = children[0]
+                S = children[1]
+                v = evalFormula(env, f)
+                (env, o) = execStatement(env, p)
                 return (env, o)
-            if label == 'Procedure':
-                children = s[label]
-                x = children[0]['Variable'][0]
-                p = children[1]
-                r = children[2]
-                env[x] = p 
-                (env, o) = execProgram(env, r)
-                return (env, o)
-            if label == 'Call':
-                children = s[label]
-                x = children[0]['Variable'][0]#access variable
-                r = children[1]#rest
-                p = env[x] #procedure in env
-                (env2, o1) = execProgram(env, p)
-                (env3, o2) = execProgram(env2, r)
-                return (env3, o1 + o2)
-            if label == 'Until':
-                children = s[label]
-                exp  = children[0]
-                body = children[1]
-                rest = children[2]
-                env1 = env
-                v = evalFormula(env1,exp)
-                if v == 'True':
-                    (env3, o2) = execProgram(env1, rest)
-                if v == 'False':
-                    (env3, o2) = execProgram(env1, {'Until':[body, exp, rest]})
-                return (env3,  o2)
-            if label == 'If':
-                children = s[label]
-                f1 = children[0]
-                f3 = children[2]
-                v1 = evalFormula(env, f1)
-                if v1 == None:
-                    v1 = evalTerm(env, f1)
-                if v1 == 'True': 
-                    f2 = children[1]
-                    env,o = execProgram(env, f2)
-                env,o2 = execProgram(env, f3)
-                return (env, o + o2)
 
 def interpret(s):
-    (env, o) = execProgram({}, tokenizeAndParse(s))
+    tokens = tokenizeAndParse(s)
+    print tokens
+    (env, o) = execStatement({}, tokens)
     return o
 
 #eof

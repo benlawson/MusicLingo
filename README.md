@@ -34,6 +34,11 @@ formula f :: ==
      | Sentiment (l) 
      | Style (t) 
 
+expression e :: ==
+           f
+         | l
+         | t 
+
 statement S :: ==
        Print (f) S
      | Play  (f) S
