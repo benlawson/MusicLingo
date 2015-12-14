@@ -1,6 +1,5 @@
 import requests, json
 
-
 with open('key.txt','r') as f:
     user = f.readline().strip()
     pwd = f.readline().strip()

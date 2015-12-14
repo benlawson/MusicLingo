@@ -20,7 +20,7 @@ def evalTerm(env, t):
             if label == 'Song':
                 song = children[0]
                 return firstpage(song, noun='song') 
-            if label == 'Both':
+            if label == 'And':
                 artistNode = children[0]
                 song = children[1]['Song'][0]
                 artisturl = evalTerm(env, artistNode)
@@ -67,9 +67,6 @@ def evalFormula(env,f):
                 f1 = children[0]
                 v1 = evalLyrics(env, f1)
                 return personality_insights(v1)  
-            elif label == 'Sentiment':
-                f1 = children[0]
-                v1 = evalTerm(env, f1)
 
 def execStatement(env, s):
     if type(s) == Leaf:
@@ -97,13 +94,12 @@ def interpret(s):
     (env, o) = execStatement({}, tokens)
     return o
 
-def interact(s):
+def interact(s=''):
     while True:
         # Prompt the user for a query.
         s = input('> ')
         if s == ':quit':
             break
-
         # Parse and evaluate the query.
         try: 
             tokens = tokenizeAndParse(s)
@@ -115,6 +111,7 @@ def interact(s):
         except TypeError:
             print("Incorrect syntax.")
  
-
+if __name__ == "__main__": 
+    interact()
 
 #eof

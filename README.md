@@ -7,11 +7,11 @@ The goal of this project is to create an easier way to manipultate music and que
 
 Some sample queries:
 ```
-interact('')
+python interpret.py
 ```
 Print a the most common word of a random song by Adele
 ```
->'print ( mode ( lyrics ( adele ) ) ) ' 
+> 'print mode ( lyrics ( song adele ) ) ;'
 ['had']
 
 ```
@@ -29,36 +29,36 @@ Print the lengh of the song Hotline Bling
 
 Print the 'personality' of the song Hello by Adele
 ```
->'print ( sentiment ( lyrics ( both ( artist ( adele hello ) ) ) ) )'
+>'print sentiment ( lyrics ( th ( artist ( adele hello ) ) ) ) )'
 [[u'Orderliness', u'Assertiveness', u'Excitement-seeking', u'Gregariousness']]
 ```
+```
+number n :: == natural numbers 
+word   w :: == an English word, song, or artist
 
->*number n* :: == natural numbers 
->*word   w* :: == an English word, song, or artist
->
->*term t* :: ==
->     left 
->   | left **and** t
->
->*left* :: ==
->     **Song** w
->   | **Artist** w
+term t :: ==
+     left 
+   | left and t
+
+left :: ==
+     Song w
+   | Artist w
      
-*lyrics l*  :: ==
->    **Lyrics** (t) 
+lyrics l  :: ==
+    Lyrics (t) 
    
-*formula f* :: ==
->    **Length** (l)
->  | **Interval** (l n n)
-> | **Element** (w l) 
->| **Mode** (l) 
-> | **Sentiment** (l) 
-> | **Style** (t) 
+formula f :: ==
+     Length (l)
+   | Interval (l n n)
+   | Element (w l) 
+   | Mode (l) 
+   | Sentiment (l) 
+   | Style (t) 
 
-*statement S* :: ==
->   **Print** (f) S ; 
->| **Play**  (f) S ;
->|  
+statement S :: ==
+     Print f S ; 
+   | Play  f S ;
+   |  
     
 
 How To use:
@@ -73,7 +73,6 @@ Formulas to use:
 Currently need to have spaces in between each paren. 
 
 
-
 ##Setup
 
 ```
@@ -83,5 +82,6 @@ virtualenv musicenv
 source musicenv/bin/activate
 pip install -r requirements.txt
 wget http://people.bu.edu/balawson/key.txt #for IBM BlueMix credentials
+python interpret.py
 ```
 

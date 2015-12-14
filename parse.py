@@ -59,6 +59,7 @@ def left(tmp, top = True):
     elif tokens[0] == 'artist':
         return ({'Artist' : [tokens[1]]}, tokens[2:])
     else: 
+         print tokens 
          return None
 
 def term(tmp, top = True):
