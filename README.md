@@ -33,35 +33,33 @@ Print the 'personality' of the song Hello by Adele
 [[u'Orderliness', u'Assertiveness', u'Excitement-seeking', u'Gregariousness']]
 ```
 
-```
 *number n* :: == natural numbers 
 *word   w* :: == an English word, song, or artist
 
 *term t* :: ==
-       left 
-     | left **and** t
++       left 
++     | left **and** t
 
 *left* :: ==
-       **Song** w
-     | **Artist** w
++       **Song** w
++     | **Artist** w
      
 *lyrics l*  :: ==
-      **Lyrics** (t) 
++    **Lyrics** (t) 
    
 *formula f* :: ==
-       **Length** (l)
-     | **Interval** (l n n)
-     | **Element** (w l) 
-     | **Mode** (l) 
-     | **Sentiment** (l) 
-     | **Style** (t) 
++     **Length** (l)
++    | **Interval** (l n n)
++    | **Element** (w l) 
++    | **Mode** (l) 
++   | **Sentiment** (l) 
++   | **Style** (t) 
 
 *statement S* :: ==
-       **Print** (f) S ; 
-     | **Play**  (f) S ;
-     |  
++     **Print** (f) S ; 
++  | **Play**  (f) S ;
++  |  
     
-```
 
 How To use:
 The two statements, Print and Play, will either print to the screen information about the queries or play the information (audio), respectively. 
