@@ -25,7 +25,7 @@ interpret('print ( length ( lyrics ( hotlinebling ) ) ) ')
 [373]
 ```
 
-Print the 'personality' of the song Hotline Bling by Drake
+Print the 'personality' of the song Hello by Adele
 ```
 interpret('print ( sentiment ( lyrics ( both ( artist ( adele hello ) ) ) ) )')
 [[u'Orderliness', u'Assertiveness', u'Excitement-seeking', u'Gregariousness']]
@@ -52,11 +52,6 @@ formula f :: ==
      | Mode (l) 
      | Sentiment (l) 
      | Style (t) 
-
-expression e :: ==
-           f
-         | l
-         | t 
 
 statement S :: ==
        Print (f) S
