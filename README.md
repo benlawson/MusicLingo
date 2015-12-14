@@ -16,23 +16,27 @@ Print ( Lyrics (Both ( Artist ('Adele') ('Hello') ) ) ) -- this will print the l
 song   s :: == any title of a song
 artist a :: == any music artist 
 number n :: == natural numbers 
+word   w :: == an English word
 
 term   t ::==  
        s 
-     | Artist (s) 
+     | Artist (a) 
+     | Both (Artist a s ) 
 
-
+lyrics l  :: ==
+       Lyrics (t)
+   
 formula f :: ==
-       Length (s)
-     | Lyrics (s)
-     | Interval (s n n)
+       Length (l)
+     | Interval (l n n)
+     | Element (w l) 
+     | Mode (l) 
+     | Sentiment (l) 
      | Style (t) 
-     | Element (w s) 
-     | Both (Artist (song) (song) ) 
 
-statement s :: ==
-       Print (f) s
-     | Play  (f) s
+statement S :: ==
+       Print (f) S
+     | Play  (f) S
      | 
     
 ```
