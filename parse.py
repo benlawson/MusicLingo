@@ -1,9 +1,8 @@
 #####################################################################
 #
 # cas cs 320, fall 2015
-# midterm (skeleton code)
 # parse.py
-# completed by ben lawson
+# completed by ben lawson for musiclingo
 #  ****************************************************************
 #  @xxxx[{::::::::::::::>  PARSE THE STRINGS <::::::::::::::}]xxxx@ 
 #  ****************************************************************
@@ -11,7 +10,6 @@
 
 import re
 
-#NOTE: artists defaults to being wrapped and songs/numbers default to unwrapped
 def number(tokens, top = True):
     if re.compile(r"^(0|[1-9][0-9]*)*$").match(tokens[0]):
             return (int(tokens[0]), tokens[1:])
@@ -24,26 +22,15 @@ def variable_wrapped(tokens, label = "Variable", top = True):
     if re.compile(r"^([A-Za-z0-9]|\s)+$").match(tokens[0]):
             return ({label:[tokens[0]]}, tokens[1:])
 
-def song (tokens, top = True):
-    return variable(tokens, label = 'Song', top = True)
-
-def song_wrapped (tokens, top = True):
-    return variable_wrapped(tokens, label = 'Song', top = True)
-
-def artist (tokens, top = True):
-    return variable_wrapped(tokens, label = 'Artist', top = True)
-
-def artist_unwrapped (tokens, top = True):
-    return variable(tokens, label = 'Artist', top = True)
-
+def word (tokens, top = True):
+    return variable(tokens, label = 'word', top = True)
 
 def tokenizeAndParse(s):
     s = s.lower()
-    tokens = re.split(r"(\s+|print|play|length|lyrics|interval|style|element|both|mode|sentiment|[A-z]*\s[A-z]*)", s)
+    tokens = re.split(r"(\s+|print|play|length|lyrics|interval|style|element|both|mode|song|artist|and|sentiment|;|[A-z]*\s[A-z]*|[0-9]+)", s)
     tokens = [t.lower() for t in tokens if not t.isspace() and not t == ""]
     print(tokens)
     (p, tokens) =  statement(tokens)
-   
     return p
 
 def parse(seqs, tmp, top = True):
@@ -65,9 +52,29 @@ def parse(seqs, tmp, top = True):
         if len(ss) + len(es) == len(seq) and (not top or len(tokens) == 0):
             return ({label:es} if len(es) > 0 else label, tokens)
 
+def left(tmp, top = True):
+    tokens = tmp[0:]
+    if tokens[0] == 'song':
+        return ({'Song' : [tokens[1]]}, tokens[2:])
+    elif tokens[0] == 'artist':
+        return ({'Artist' : [tokens[1]]}, tokens[2:])
+    else: 
+         return None
+
+def term(tmp, top = True):
+    tokens = tmp[0:]
+    (e1, tokens) = left(tokens)
+    if tokens and tokens[0] == 'and':
+        (e2, tokens) = term(tokens[1:])
+        return ({'And' :[e1, e2]}, tokens)
+    else:
+        return (e1, tokens)  
+
 def lyrics(tmp, top =True):
     tokens = tmp[0:]
-    return parse([('Lyrics',  ['lyrics', '(',term, ')'])], tmp, top)
+    r =  parse([('Lyrics',  ['lyrics', '(',term, ')'])], tmp, top)
+    if r is not None:
+        return r
 
 def formula(tmp, top = True):
     tokens = tmp[0:]
@@ -75,37 +82,21 @@ def formula(tmp, top = True):
         ('Length',  ['length', '(', lyrics, ')']),\
         ('Mode',  ['mode', '(', lyrics, ')']),\
         ('Sentiment',  ['sentiment', '(', lyrics, ')']),\
-        ('Element',  ['element', '(', song, lyrics,  ')']),\
+        ('Element',  ['element', '(', word, lyrics,  ')']),\
         ('Interval',  ['interval', '(', lyrics, number, number, ')']),\
         ('Style',  ['style',  '(', term, ')']),\
         ], tokens, top)
     if not r is None:
         return r
 
-def term(tmp, top = True):
-    tokens = tmp[0:]
-    r = parse([\
-        ('Artist',['artist', '(', artist_unwrapped, ')']),\
-        ('Both',  ['both', '(', 'artist', '(', artist, song_wrapped, ')', ')']),\
-        ('Song',  [ song ])\
-        ], tokens, top)
-    if not r is None:
-        return r
-
-def expression(tmp, top = True):
-    tokens = tmp[0:]
-    for x in [formula, term, lyrics]:
-        r = x(tokens)  
-        if not r is None:
-            return r
-
-
 def statement(tmp, top = True):
     if len(tmp) == 0:
         return ('End', [])
     r = parse([\
-        ('Print', ['print', '(' ,formula, ')', statement]),\
-        ('Play',  ['play' , '(' ,formula, ')', statement]),\
+        ('Print', ['print', formula, ';' , statement]),\
+        ('Print', ['print', term, ';' , statement]),\
+        ('Play',  ['play' , formula, ';' , statement]),\
+        ('Print', ['play', term, ';' , statement]),\
         ('End', [])\
         ], tmp, top)
     if not r is None:

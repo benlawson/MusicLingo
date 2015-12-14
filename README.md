@@ -34,34 +34,32 @@ Print the 'personality' of the song Hello by Adele
 ```
 
 ```
-number n :: == natural numbers 
-word   w :: == an English word, song, or artist
+*number n* :: == natural numbers 
+*word   w* :: == an English word, song, or artist
 
-query  q ::==  
-       t
-     | Artist w
-     | q and q
+*term t* :: ==
+       left 
+     | left **and** t
 
-term t :: ==
-       w 
-     | Both (Artist w w)
-
-lyrics l  :: ==
-       Lyrics (q)
-     | Lyrics (t) 
+*left* :: ==
+       **Song** w
+     | **Artist** w
+     
+*lyrics l*  :: ==
+      **Lyrics** (t) 
    
-formula f :: ==
-       Length (l)
-     | Interval (l n n)
-     | Element (w l) 
-     | Mode (l) 
-     | Sentiment (l) 
-     | Style (q) 
+*formula f* :: ==
+       **Length** (l)
+     | **Interval** (l n n)
+     | **Element** (w l) 
+     | **Mode** (l) 
+     | **Sentiment** (l) 
+     | **Style** (t) 
 
-statement S :: ==
-       Print (f) S
-     | Play  (f) S
-     | 
+*statement S* :: ==
+       **Print** (f) S ; 
+     | **Play**  (f) S ;
+     |  
     
 ```
 
@@ -74,12 +72,7 @@ Formulas to use:
 + Mode returns the most common word in a song
 + Sentiment uses IBM BlueMix Personality Insights to determine personality keywords to describe the song.
 
-These formulas act on lyrics, which can be build from using a term. 
-
-The formulas are used to build up queries. These act upon terms, which are either a song or an artist. 
-
 Currently need to have spaces in between each paren. 
-
 
 
 
