@@ -27,8 +27,9 @@ def firstpage(term, noun='song'):
                 return target_page 
 
 def bothpage(url, song):
-        nextpage = url +  '/songs/all/'
-        print nextpage
+        suffix =  '/songs/all/'
+        nextpage = url + suffix if suffix not in url else url
+        #print nextpage
         req = urllib2.Request(nextpage, headers=hdr)
         x = urllib2.urlopen(req).read()
         soup = BeautifulSoup(x)
@@ -37,6 +38,10 @@ def bothpage(url, song):
             if song.split(' ')[0] in a and "http" in a:
                 target_page = a
                 return target_page 
+        for link in soup.find_all('a'):
+            if 'Next' in link.text: #need to page through all the songs
+                 a = str(link.get('href'))
+                 return bothpage(a, song)
     
 def secondpage(target_page, adjective='genre'):        
         genre_list = []

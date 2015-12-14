@@ -1,7 +1,7 @@
 exec(open('parse.py').read())
-exec(open('music.py').read())
+#exec(open('music.py').read())
 exec(open('sentiment.py').read())
-
+from music import *
 from collections import Counter
 
 Node = dict
@@ -68,6 +68,10 @@ def evalFormula(env,f):
                 f1 = children[0]
                 v1 = evalLyrics(env, f1)
                 return personality_insights(v1)  
+            elif label == 'Sentiment':
+                f1 = children[0]
+                v1 = evalTerm(env, f1)
+
     elif type(f) == Leaf:
         if f == 'True':
             return 'True'
