@@ -44,6 +44,28 @@ statement S :: ==
 How To use:
 The two statements, Print and Play, will either print to the screen information about the queries or play the information (audio), respectively. 
 
+Formulas to use:
+Length will return a number that represents the number of words in the song.
+Interval will return the lyrics between the two number inverals
+
+Mode returns the most common word in a song
+Sentiment uses IBM BlueMix Personality Insights to determine personality keywords to describe the song.
+
 The formulas are used to build up queries. These act upon terms, which are either a song or an artist. 
 
 Currently need to have spaces in between each paren. 
+
+
+
+
+##Setup
+
+```
+git clone https://github.com/benlawson/MusicLingo.git
+cd MusicLingo
+virtualenv musicenv
+source musicenv/bin/activate
+pip install -r requirements.txt
+wget http://people.bu.edu/key.txt
+```
+

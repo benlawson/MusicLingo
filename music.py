@@ -9,9 +9,8 @@ hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML,
        'Connection': 'keep-alive'}
 
 
-def search(term, noun='song', adjective='genre'):
+def firstpage(term, noun='song'):
       
-        genre_list = []
         #clean search term
         term = term.replace(" ","%20").lower()
         term_search = term.replace("_","%20").lower().replace(u'\u0024', 'S').replace(u'\u0026', 'and').replace(u'\u2300', 'o')
@@ -25,13 +24,33 @@ def search(term, noun='song', adjective='genre'):
             a = link.get('href')
             if noun in a and "http" in a:
                 target_page = a
-                break
-        
+                return target_page 
+
+def bothpage(url, song):
+        nextpage = url +  '/songs/all/'
+        print nextpage
+        req = urllib2.Request(nextpage, headers=hdr)
+        x = urllib2.urlopen(req).read()
+        soup = BeautifulSoup(x)
+        for link in soup.find_all('a'):
+            a = str(link.get('href'))
+            if song.split(' ')[0] in a and "http" in a:
+                target_page = a
+                return target_page 
+    
+def secondpage(target_page, adjective='genre'):        
+        genre_list = []
+
         if adjective == 'lyrics': 
            suffix = '/lyrics'
-        else: suffix = None
+        else: suffix = '' 
         #navigate to main page
-        req2 = urllib2.Request(target_page + suffix, headers=hdr)
+        try: 
+            req2 = urllib2.Request(target_page + suffix, headers=hdr)
+        except:
+            suffix = '/biography'
+            req2 = urllib2.Request(target_page + suffix, headers=hdr)
+            
         print target_page + suffix
         z = urllib2.urlopen(req2).read()
         soup = BeautifulSoup(z)
@@ -55,14 +74,9 @@ def search(term, noun='song', adjective='genre'):
 
         for genre in soup.find_all(tag, {attr : query}):
             if no_link:
-                genre_list.append(genre.text)
+                return filter(lambda d: len(d) > 0, genre.text.split(' ')) #this should break in Python3 TODO fix this
             if not no_link:
                  for text in genre.find_all('a'):
                     genre_list.append( (text.string.replace(' ','_')))
-        
-        #except:
-        #this is exception catches two known cases: when the 'artist' string is non-ascii and when the artist does not appear on the website
-        #as it does in my collection
-        #     return None 
         return genre_list
 #eof
