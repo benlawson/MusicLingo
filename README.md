@@ -66,6 +66,6 @@ cd MusicLingo
 virtualenv musicenv
 source musicenv/bin/activate
 pip install -r requirements.txt
-wget http://people.bu.edu/key.txt
+wget http://people.bu.edu/balawson/key.txt
 ```
 
