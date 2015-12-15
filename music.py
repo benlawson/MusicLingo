@@ -1,10 +1,8 @@
 import urllib2
 try:
     import bs4  as bs
-    print bs
 except:
     import BeautifulSoup as bs
-    print bs
 
 hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -25,7 +23,10 @@ def firstpage(term, noun='song'):
         req = urllib2.Request(search, headers=hdr)
         x = urllib2.urlopen(req).read()
         #open first page (search)
-        soup = bs.BeautifulSoup(x)
+        try:
+            soup = bs.BeautifulSoup(x)
+        except:
+            soup = BeautifulSoup(x)
         for link in soup.find_all('a'):
             a = link.get('href')
             if noun in a and "http" in a:
@@ -38,7 +39,10 @@ def bothpage(url, song):
         print nextpage
         req = urllib2.Request(nextpage, headers=hdr)
         x = urllib2.urlopen(req).read()
-        soup = bs.BeautifulSoup(x)
+        try:
+            soup = bs.BeautifulSoup(x)
+        except:
+            soup = BeautifulSoup(x)
         for link in soup.find_all('a'):
             a = str(link.get('href'))
             text = str(link.text)
@@ -61,7 +65,10 @@ def secondpage(target_page, adjective='genre'):
         req2 = urllib2.Request(target_page + suffix, headers=hdr)
         print target_page + suffix
         z = urllib2.urlopen(req2).read()
-        soup = bs.BeautifulSoup(z)
+        try:
+            soup = bs.BeautifulSoup(z)
+        except:
+            soup = BeautifulSoup(z)
 
         #aquire information
         #set search terms
