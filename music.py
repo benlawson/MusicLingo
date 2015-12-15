@@ -79,7 +79,6 @@ def secondpage(target_page, adjective='genre'):
             attr = 'id'
             query = 'hidden_without_js' 
             no_link = True
-        print soup.find_all(tag, {attr : query } )
         for genre in soup.find_all(tag, {attr : query}):
             if no_link:
                 return filter(lambda d: len(d) > 0, genre.text.split(' ')) #this should break in Python3 TODO fix this

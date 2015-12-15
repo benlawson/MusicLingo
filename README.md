@@ -55,6 +55,12 @@ Check the genre of an artist or song
 ['Country Pop/Rock']
 ```
 
+Example of a nested statement (note the structure of the output, a 2-element list)
+```
+>print genre ( artist taylor swift and song love story) ; print styles ( artist taylor swift and song love story ) ; 
+['Country Pop/Rock', 'Contemporary_Country Country-Pop Pop']
+```
+
 
 Play statement: works on Mac or Linux with *gnustep-gui-runtime* package installed
 on Debian-based systems you install via:
