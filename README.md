@@ -11,25 +11,25 @@ python interpret.py
 ```
 Print a the most common word of a random song by Adele
 ```
-> 'print mode ( lyrics ( song adele ) ) ;'
+> print mode ( lyrics ( song adele ) ) ;
 ['had']
 
 ```
 Print the most common word in the song 'Hello' by Adele
 ```
-> 'print mode ( lyrics ( artist adele and song hello ) ) ;'
+> print mode ( lyrics ( artist adele and song hello ) ) ;
 ['you']
 ```
 
 Print the lengh of the song Hotline Bling
 ```
-> 'print length ( lyrics ( song hotline bling ) ) ;'
+> print length ( lyrics ( song hotline bling ) ) ;
 [373]
 ```
 
 Print the 'personality' of the song Hello by Adele
 ```
->'print sentiment ( lyrics ( artist adele and song hello ) ) ;'
+>print sentiment ( lyrics ( artist adele and song hello ) ) ;
 [[u'Orderliness', u'Assertiveness', u'Excitement-seeking', u'Gregariousness']]
 ```
 
@@ -40,7 +40,7 @@ sudo apt-get install gnustep-gui-runtime
 ```
 
 ```
->'play lyrics (artist adele and song hello ) ;'
+>play lyrics (artist adele and song hello ) ;
 ['you should hear this']
 ```
 
@@ -66,23 +66,36 @@ formula f :: ==
    | Mode (l) 
    | Sentiment (l) 
    | Style (t) 
+   | Moods (t) 
 
 statement S :: ==
      Print f S ; 
+   | Print l S ;
    | Play  f S ;
-   |  
+   | Play  l S ;
+   | 
     
 ```
 How To use:
 The two statements, Print and Play, will either print to the screen information about the queries or play the information (audio), respectively. 
+
+Terms:
++ Songs are song titles
++ Artists are artist/band names
+At the momment only title and names with only one space (max) are supported.
+Using the 'and' term will allow you to chain multiple songs and/or artists, but note that all searchs will be conjunctive, so you may not get exactly what you want. Sometimes less is more.
 
 Formulas to use:
 + Length will return a number that represents the number of words in the song.
 + Interval will return the lyrics between the two number inverals
 + Mode returns the most common word in a song
 + Sentiment uses IBM BlueMix Personality Insights to determine personality keywords to describe the song.
++ Style will return the style of music the term has
++ Moods will return the moods of music the term has (if there is one)
 
-Currently need to have spaces in between each paren. 
+Statements:
++ Print will display the information on the screen
++ Play will play the information through your speackers
 
 
 ##Setup
