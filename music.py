@@ -23,11 +23,13 @@ def firstpage(term, noun='song'):
         req = urllib2.Request(search, headers=hdr)
         x = urllib2.urlopen(req).read()
         #open first page (search)
+        soup = bs.BeautifulSoup(x)
         try:
-            soup = bs.BeautifulSoup(x)
+            links = soup.find_all('a')
         except:
-            soup = BeautifulSoup(x)
-        for link in soup.find_all('a'):
+            links = soup.findAll('a')
+
+        for link in links:
             a = link.get('href')
             if noun in a and "http" in a:
                 target_page = a
@@ -39,11 +41,14 @@ def bothpage(url, song):
         print nextpage
         req = urllib2.Request(nextpage, headers=hdr)
         x = urllib2.urlopen(req).read()
+
+        soup = bs.BeautifulSoup(x)
         try:
-            soup = bs.BeautifulSoup(x)
+            links = soup.find_all('a')
         except:
-            soup = BeautifulSoup(x)
-        for link in soup.find_all('a'):
+            links = soup.findAll('a')
+
+        for link in links:
             a = str(link.get('href'))
             text = str(link.text)
             if song.split(' ')[0] in text and "http" in a:
@@ -62,13 +67,10 @@ def secondpage(target_page, adjective='genre'):
         else: suffix = '' 
         #navigate to main page
         
-        req2 = urllib2.Request(target_page + suffix, headers=hdr)
+        req = urllib2.Request(target_page + suffix, headers=hdr)
         print target_page + suffix
-        z = urllib2.urlopen(req2).read()
-        try:
-            soup = bs.BeautifulSoup(z)
-        except:
-            soup = BeautifulSoup(z)
+        x = urllib2.urlopen(req).read()
+        soup = bs.BeautifulSoup(x)
 
         #aquire information
         #set search terms
@@ -86,7 +88,12 @@ def secondpage(target_page, adjective='genre'):
             attr = 'id'
             query = 'hidden_without_js' 
             no_link = True
-        for genre in soup.find_all(tag, {attr : query}):
+        try:
+            links = soup.find_all(tag, {attr : query})
+        except:
+            links = soup.findAll(tag, {attr : query})
+            
+        for genre in links:
             if no_link:
                 return filter(lambda d: len(d) > 0, genre.text.split(' ')) #this should break in Python3 TODO fix this
             if not no_link:
