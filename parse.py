@@ -36,7 +36,7 @@ def tokenize(s):
     good = []
     for t in tokens:
         good.extend(tokenizeword(t))
-    tokens = [t.lower() for t in good if not t.isspace() and not t == ""]
+    tokens = [t.lower().strip() for t in good if not t.isspace() and not t == ""]
     return tokens 
 
 def tokenizeword(s):

@@ -93,6 +93,8 @@ def execStatement(env, s):
                 if not(v):
                     v = evalLyrics(env, f)
                 (env, o) = execStatement(env, S)
+                v = [str(x) for x in v]
+                v = ' '.join(v).replace("\r",' ').replace("\n",' ')
                 return (env, [v] + o)
             if label == 'Play':
                 children = s[label]
@@ -103,7 +105,6 @@ def execStatement(env, s):
                     v = evalLyrics(env, f)
                 (env, o) = execStatement(env, S)
                 v = [str(x) for x in v]
-                
                 v = ' '.join(v).replace("\r",' ').replace("\n",' ')
                 os.popen('say -r 2000 {0}'.format([str(v) + str(o)]))
                 return (env, ['you should hear this'] + o)
@@ -116,19 +117,19 @@ def interpret(s):
 def interact(s=''):
     while True:
         # Prompt the user for a query.
-        s = input('> ')
-        if s == ':quit':
+        s = raw_input('> ')
+        if ':quit' in s or ':exit' in s or ':q' in s:
             break
         # Parse and evaluate the query.
         try: 
             tokens = tokenizeAndParse(s)
             if not tokens is None:
-                (env, o) = execStatement({}, tokens)
-                print o
+               (env, o) = execStatement({}, tokens)
+               print o
             else:
-                print("Unknown input.")
-        except TypeError:
-            print("Incorrect syntax.")
+               print("Unknown input.")
+        except:
+           print("Incorrect syntax.")
  
 if __name__ == "__main__": 
     interact()
