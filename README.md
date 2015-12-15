@@ -3,7 +3,7 @@
 ####by Ben Lawson
 ==================
 
-The goal of this project is to create an easier way to manipultate music and query it. This language is built from using user-submitted data to allmusic.com. In the general, the expressions relate to lyrics. I hope to all a 'play' statement that will search for the song on YouTube or similar and play from that.
+The goal of this project is to create an easier way to manipultate music and query it. This language uses data generated from the user-contributed website [allmusic.com](allmusic.com). The print statement prints to screen and the play function will read aloud the results through your speakers. Deadcode elimination will short circuit poorly phrased queries to return the expected 'None' before the query reaches the server. 
 
 Some sample queries:
 ```

@@ -1,6 +1,7 @@
 exec(open('parse.py').read())
 #exec(open('music.py').read())
 exec(open('sentiment.py').read())
+exec(open('optimize.py').read())
 from music import *
 from collections import Counter
 import os
@@ -21,7 +22,10 @@ def evalTerm(env, t):
                 return (artist, firstpage(artist, noun='artist') )
             if label == 'Song':
                 song = children[0]
-                return (song, firstpage(song, noun='song') )
+                if song:
+                    return (song, firstpage(song, noun='song') )
+                else: 
+                    return (song, None)
             if label == 'And':
                 e1 = children[0] 
                 e2 = children[1] 
@@ -48,7 +52,10 @@ def evalLyrics(env, t):
             if label == 'Lyrics':
                 f1 = children[0]
                 v1 = evalTerm(env, f1)[1]
-                return secondpage(v1, adjective='lyrics') 
+                if v1:
+                    return secondpage(v1, adjective='lyrics') 
+                else:
+                    return None 
          
 def evalFormula(env,f):
     if type(f) == Node:
@@ -109,6 +116,8 @@ def execStatement(env, s):
                     v = evalLyrics(env, f)
                     lyrics = True
                 else: lyrics = False
+                if type(v) == type(None):
+                    lyrics = False
                 (env, o) = execStatement(env, S)
                 if lyrics:
                     v = [str(x) for x in v]
@@ -131,8 +140,9 @@ def execStatement(env, s):
                 return (env, ['you should hear this'] + o)
 
 def interpret(s):
-    tokens = tokenizeAndParse(s)
-    (env, o) = execStatement({}, tokens)
+    tree = tokenizeAndParse(s)
+    tree2 = eliminateDeadCode(tree) 
+    (env, o) = execStatement({}, tree2)
     return o
 
 def interact(s=''):
