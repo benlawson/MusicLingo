@@ -32,7 +32,7 @@ def tokenizeAndParse(s):
 
 def tokenize(s):
     s = s.lower()
-    tokens = re.split(r"(\s+|print|play|length|lyrics|interval|style|element|both|mode|song|artist|and|sentiment|;|[[A-z]*\s[A-z]*|0-9]+)", s)
+    tokens = re.split(r"(\s+|print|play|length|lyrics|interval|styles|genre|element|both|mode|song|artist|and|sentiment|;|[[A-z]*\s[A-z]*|0-9]+)", s)
     good = []
     for t in tokens:
         good.extend(tokenizeword(t))
@@ -41,7 +41,7 @@ def tokenize(s):
 
 def tokenizeword(s):
     s = s.lower()
-    return  re.split(r"(print|play|length|lyrics|interval|style|element|both|mode|song|artist|and|sentiment|;|0-9]+)", s)
+    return  re.split(r"(print|play|length|lyrics|interval|styles|element|genre|both|mode|song|artist|and|sentiment|;|0-9]+)", s)
     
     
 
@@ -110,7 +110,9 @@ def formula(tmp, top = True):
         ('Sentiment',  ['sentiment', '(', lyrics, ')']),\
         ('Element',  ['element', '(', word, lyrics,  ')']),\
         ('Interval',  ['interval', '(', lyrics, number, number, ')']),\
-        ('Style',  ['style',  '(', term, ')']),\
+        ('Styles',  ['styles',  '(', term, ')']),\
+        ('Moods',  ['moods',  '(', term, ')']),\
+        ('Genre',  ['genre',  '(', term, ')']),\
         ], tokens, top)
     if not r is None:
         return r

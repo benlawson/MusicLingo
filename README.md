@@ -32,9 +32,32 @@ Print the 'personality' of the song Hello by Adele
 >print sentiment ( lyrics ( artist adele and song hello ) ) ;
 [[u'Orderliness', u'Assertiveness', u'Excitement-seeking', u'Gregariousness']]
 ```
+Check if a word is in the lyrics
+```
+>print element ( hate lyrics ( artist taylor swift and song love ) ) ;
+[True]
+```
 
-works on Mac or Linux with *gnustep-gui-runtime* package installed
-(on Debian-based systems you install via:
+Check the moods of an artist or song
+```
+>print moods ( artist taylor swift ) ;
+ ['Cathartic Earnest Passionate Sentimental Warm Exuberant Reflective Sophisticated Carefree Confident Gentle Laid-Back/Mellow Organic Playful Refined Springlike Sweet Yearning Amiable/Good-Natured Bittersweet Cheerful Confrontational Theatrical Angst-Ridden Relaxed Romantic Clinical Effervescent Poignant']
+```
+Check the styles of an artist or song
+```
+>print styles ( artist taylor swift and song love story) ;
+['Contemporary_Country Country-Pop Pop']
+```
+
+Check the genre of an artist or song
+```
+>print genre ( artist taylor swift and song love story) ;
+['Country Pop/Rock']
+```
+
+
+Play statement: works on Mac or Linux with *gnustep-gui-runtime* package installed
+on Debian-based systems you install via:
 ```
 sudo apt-get install gnustep-gui-runtime
 ```
@@ -43,6 +66,13 @@ sudo apt-get install gnustep-gui-runtime
 >play lyrics (artist adele and song hello ) ;
 ['you should hear this']
 ```
+
+Play just the first 100 words of song: 
+```
+>play interval ( lyrics ( artist taylor swift and song love ) 0 100 ) ;
+['you should hear this']
+```
+
 
 ```
 number n :: == natural numbers 

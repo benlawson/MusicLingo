@@ -7,6 +7,7 @@ import os
 
 Node = dict
 Leaf = str
+Num = int
 
 def evalTerm(env, t):
     if type(t) == Leaf: #word
@@ -37,11 +38,8 @@ def evalTerm(env, t):
                     return (joint, firstpage(joint, noun='song') )
 
 def evalNumber(env, t):
-    if type(t) == Node:
-        for label in t:
-            children = t[label]
-            if label == 'Number':
-                return children[0]
+    if type(t) == Num:
+         return t 
             
 def evalLyrics(env, t):
     if type(t) == Node:
@@ -64,7 +62,7 @@ def evalFormula(env,f):
                 f1 = children[0]
                 f2 = children[1]
                 f3 = children[2]
-                v1 = evalLyrics(env, f1)[0]
+                v1 = evalLyrics(env, f1)
                 v2 = evalNumber(env, f2)
                 v3 = evalNumber(env, f3)
                 return v1[v2:v3]
@@ -80,13 +78,21 @@ def evalFormula(env,f):
             elif label == 'Element':
                 f1 = children[0]
                 f2 = children[1]
-                v1 = evalTerm(f1)[1]
-                v2 = evalLyrics(f2)
+                v1 = evalTerm(env, f1)[1]
+                v2 = evalLyrics(env, f2)
                 return v1 in v2
-            elif label == 'Style':
+            elif label == 'Moods':
                 f1 = children[0]
-                v1 = evalTerm(f1)[1]
-                return v1
+                v1 = evalTerm(env, f1)[1]
+                return secondpage(v1, adjective='moods') 
+            elif label == 'Styles':
+                f1 = children[0]
+                v1 = evalTerm(env, f1)[1]
+                return secondpage(v1, adjective='styles') 
+            elif label == 'Genre':
+                f1 = children[0]
+                v1 = evalTerm(env, f1)[1]
+                return secondpage(v1, adjective='genre') 
 
 def execStatement(env, s):
     if type(s) == Leaf:
@@ -99,23 +105,29 @@ def execStatement(env, s):
                 f = children[0]
                 S = children[1]
                 v = evalFormula(env, f)
-                if not(v):
+                if type(v) == type(None):
                     v = evalLyrics(env, f)
                 (env, o) = execStatement(env, S)
-                v = [str(x) for x in v]
-                v = ' '.join(v).replace("\r",' ').replace("\n",' ')
+                try: 
+                    v = [str(x) for x in v]
+                    v = ' '.join(v).replace("\r",' ').replace("\n",' ')
+                except:
+                    pass
                 return (env, [v] + o)
             if label == 'Play':
                 children = s[label]
                 f = children[0]
                 S = children[1]
                 v = evalFormula(env, f)
-                if not(v):
+                if type(v) == type(None):
                     v = evalLyrics(env, f)
                 (env, o) = execStatement(env, S)
-                v = [str(x) for x in v]
-                v = ' '.join(v).replace("\r",' ').replace("\n",' ')
-                os.popen('say -r 2000 {0}'.format([str(v) + str(o)]))
+                try: 
+                    v = [str(x) for x in v]
+                    v = ' '.join(v).replace("\r",' ').replace("\n",' ').replace('\'', '')
+                except:
+                    pass
+                os.popen('say {0}'.format([str(v) + str(o)]))
                 return (env, ['you should hear this'] + o)
 
 def interpret(s):
