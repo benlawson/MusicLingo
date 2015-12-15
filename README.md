@@ -126,12 +126,14 @@ Formulas to use:
 + Interval will return the lyrics between the two number inverals
 + Mode returns the most common word in a song
 + Sentiment uses IBM BlueMix Personality Insights to determine personality keywords to describe the song.
-+ Style will return the style of music the term has
++ Styles will return the style of music the term has
++ Element will return a boolean if the word is in the lyrics 
 + Moods will return the moods of music the term has (if there is one)
++ Genre will return the genre of the music
 
 Statements:
 + Print will display the information on the screen
-+ Play will play the information through your speackers
++ Play will play the information through your speakers
 
 
 ##Setup
@@ -146,3 +148,9 @@ wget http://people.bu.edu/balawson/key.txt #for IBM BlueMix credentials
 python interpret.py
 ```
 
+
+######Easter Eggs
+in the MusicLingo shell you can change the prompt with the command
+```
+:set <expression>
+```
