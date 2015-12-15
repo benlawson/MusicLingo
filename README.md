@@ -33,7 +33,12 @@ Print the 'personality' of the song Hello by Adele
 [[u'Orderliness', u'Assertiveness', u'Excitement-seeking', u'Gregariousness']]
 ```
 
-works on Mac or Linux with XXX package installed
+works on Mac or Linux with *gnustep-gui-runtime* package installed
+(on Debian-based systems you install via:
+```
+sudo apt-get install gnustep-gui-runtime
+```
+
 ```
 >'play lyrics (artist adele and song hello ) ;'
 ['you should hear this']
