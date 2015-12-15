@@ -1,7 +1,7 @@
 exec(open('parse.py').read())
-exec(open('music.py').read())
+#exec(open('music.py').read())
 exec(open('sentiment.py').read())
-#from music import *
+from music import *
 from collections import Counter
 import os
 
@@ -17,15 +17,24 @@ def evalTerm(env, t):
             children = t[label]
             if label == 'Artist':
                 artist = children[0]
-                return firstpage(artist, noun='artist') 
+                return (artist, firstpage(artist, noun='artist') )
             if label == 'Song':
                 song = children[0]
-                return firstpage(song, noun='song') 
+                return (song, firstpage(song, noun='song') )
             if label == 'And':
-                artistNode = children[0]
-                song = children[1]['Song'][0]
-                artisturl = evalTerm(env, artistNode)
-                return bothpage(artisturl, song) 
+                e1 = children[0] 
+                e2 = children[1] 
+                v1 = evalTerm(env, e1)
+                v2 = evalTerm(env, e2)
+                joint = v1[0] + ' ' + v2[0]
+                try:
+                    return (joint, bothpage(v1[0], v2[1]))
+                except:
+                    pass
+                try: 
+                    return (joint, bothpage(v1[1], v2[0]))
+                except:
+                    return (joint, firstpage(joint, noun='song') )
 
 def evalNumber(env, t):
     if type(t) == Node:
@@ -40,7 +49,7 @@ def evalLyrics(env, t):
             children = t[label]
             if label == 'Lyrics':
                 f1 = children[0]
-                v1 = evalTerm(env, f1)
+                v1 = evalTerm(env, f1)[1]
                 return secondpage(v1, adjective='lyrics') 
          
 def evalFormula(env,f):
@@ -71,12 +80,12 @@ def evalFormula(env,f):
             elif label == 'Element':
                 f1 = children[0]
                 f2 = children[1]
-                v1 = evalTerm(f1)
+                v1 = evalTerm(f1)[1]
                 v2 = evalLyrics(f2)
                 return v1 in v2
             elif label == 'Style':
                 f1 = children[0]
-                v1 = evalTerm(f1)
+                v1 = evalTerm(f1)[1]
                 return v1
 
 def execStatement(env, s):
@@ -114,24 +123,5 @@ def interpret(s):
     (env, o) = execStatement({}, tokens)
     return o
 
-def interact(s=''):
-    while True:
-        # Prompt the user for a query.
-        s = raw_input('> ')
-        if ':quit' in s or ':exit' in s or ':q' in s:
-            break
-        # Parse and evaluate the query.
-        try: 
-            tokens = tokenizeAndParse(s)
-            if not tokens is None:
-               (env, o) = execStatement({}, tokens)
-               print o
-            else:
-               print("Unknown input.")
-        except:
-           print("Incorrect syntax.")
- 
-if __name__ == "__main__": 
-    interact()
 
 #eof
