@@ -146,7 +146,7 @@ def interpret(s):
     return o
 
 def interact(s=''):
-    prompt = '>'
+    prompt = 'MusicLingo>'
     while True:
         # Prompt the user for a query.
         s = raw_input('{0} '.format(prompt))
