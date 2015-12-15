@@ -107,12 +107,12 @@ def execStatement(env, s):
                 v = evalFormula(env, f)
                 if type(v) == type(None):
                     v = evalLyrics(env, f)
+                    lyrics = True
+                else: lyrics = False
                 (env, o) = execStatement(env, S)
-                try: 
+                if lyrics:
                     v = [str(x) for x in v]
                     v = ' '.join(v).replace("\r",' ').replace("\n",' ')
-                except:
-                    pass
                 return (env, [v] + o)
             if label == 'Play':
                 children = s[label]
@@ -121,12 +121,12 @@ def execStatement(env, s):
                 v = evalFormula(env, f)
                 if type(v) == type(None):
                     v = evalLyrics(env, f)
+                    lyrics = True
+                else: lyrics = False
                 (env, o) = execStatement(env, S)
-                try: 
+                if lyrics: 
                     v = [str(x) for x in v]
                     v = ' '.join(v).replace("\r",' ').replace("\n",' ').replace('\'', '')
-                except:
-                    pass
                 os.popen('say {0}'.format([str(v) + str(o)]))
                 return (env, ['you should hear this'] + o)
 
@@ -135,5 +135,24 @@ def interpret(s):
     (env, o) = execStatement({}, tokens)
     return o
 
+def interact(s=''):
+    prompt = '>'
+    while True:
+        # Prompt the user for a query.
+        s = raw_input('{0} '.format(prompt))
+        if ':quit' in s or ':exit' in s or ':q' in s:
+            break
+
+        if s.split(' ')[0] == ':set':
+            prompt = ' '.join(s.split(' ')[1:])+ '>' #easter egg
+            continue
+        # Parse and evaluate the query.
+        try: 
+            print interpret(s)
+        except: 
+           print("Something went wrong. Check the syntax?")
+ 
+if __name__ == "__main__": 
+    interact()
 
 #eof
