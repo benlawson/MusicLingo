@@ -60,7 +60,7 @@ statement S :: ==
    | Play  f S ;
    |  
     
-
+```
 How To use:
 The two statements, Print and Play, will either print to the screen information about the queries or play the information (audio), respectively. 
 
