@@ -17,19 +17,19 @@ Print a the most common word of a random song by Adele
 ```
 Print the most common word in the song 'Hello' by Adele
 ```
->'print ( mode ( lyrics ( both ( artist ( adele hello ) ) ) ) )'
+> 'print mode ( lyrics ( artist adele and song hello ) ) ;'
 ['you']
 ```
 
 Print the lengh of the song Hotline Bling
 ```
->'print ( length ( lyrics ( hotline bling ) ) ) '
+> 'print length ( lyrics ( song hotline bling ) ) ;'
 [373]
 ```
 
 Print the 'personality' of the song Hello by Adele
 ```
->'print sentiment ( lyrics ( th ( artist ( adele hello ) ) ) ) )'
+>'print sentiment ( lyrics ( artist adele and song hello ) ) ;'
 [[u'Orderliness', u'Assertiveness', u'Excitement-seeking', u'Gregariousness']]
 ```
 ```

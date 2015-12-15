@@ -1,4 +1,4 @@
-#####################################################################
+####################################################################
 #
 # cas cs 320, fall 2015
 # parse.py
@@ -26,12 +26,39 @@ def word (tokens, top = True):
     return variable(tokens, label = 'word', top = True)
 
 def tokenizeAndParse(s):
-    s = s.lower()
-    tokens = re.split(r"(\s+|print|play|length|lyrics|interval|style|element|both|mode|song|artist|and|sentiment|;|[A-z]*\s[A-z]*|[0-9]+)", s)
-    tokens = [t.lower() for t in tokens if not t.isspace() and not t == ""]
-    print(tokens)
+    tokens = tokenize(s)
+    print tokens
     (p, tokens) =  statement(tokens)
     return p
+
+def tokenize(s):
+    s = s.lower()
+    tokens = re.split(r"(\s+|print|play|length|lyrics|interval|style|element|both|mode|song|artist|and|sentiment|;|[[A-z]*\s[A-z]*|0-9]+)", s)
+    good = []
+    for t in tokens:
+        good.extend(tokenizeword(t))
+    tokens = [t.lower() for t in good if not t.isspace() and not t == ""]
+    return tokens 
+
+def tokenizeword(s):
+    s = s.lower()
+    return  re.split(r"(print|play|length|lyrics|interval|style|element|both|mode|song|artist|and|sentiment|;|0-9]+)", s)
+    
+    
+
+def parse(seqs, tmp, top = True):
+    '''basic parser. this is taken from orginally from the hw3 skeleton'''
+    for (label, seq) in seqs:
+        tokens = tmp[0:]
+        (ss, es) = ([], [])
+        for x in seq:
+            if type(x) == type(""):
+                if tokens[0] == x:
+                    tokens = tokens[1:]
+                    ss = ss + [x]
+                else: break
+            else:
+                r = x(tokens, False)
 
 def parse(seqs, tmp, top = True):
     '''basic parser. this is taken from orginally from the hw3 skeleton'''
