@@ -1,2 +1,6 @@
 BeautifulSoup==3.2.1
 wsgiref==0.1.2
+BeautifulSoup==3.2.1
+argparse==1.2.1
+requests==2.8.1
+wsgiref==0.1.2
