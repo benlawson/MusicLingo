@@ -3,13 +3,14 @@ exec(open('music.py').read())
 exec(open('sentiment.py').read())
 #from music import *
 from collections import Counter
+import os
 
 Node = dict
 Leaf = str
 
 def evalTerm(env, t):
-    if type(t) == Leaf: #song
-        return firstpage(t, noun='song') 
+    if type(t) == Leaf: #word
+        return t 
 
     if type(t) == Node:
         for label in t:
@@ -67,6 +68,16 @@ def evalFormula(env,f):
                 f1 = children[0]
                 v1 = evalLyrics(env, f1)
                 return personality_insights(v1)  
+            elif label == 'Element':
+                f1 = children[0]
+                f2 = children[1]
+                v1 = evalTerm(f1)
+                v2 = evalLyrics(f2)
+                return v1 in v2
+            elif label == 'Style':
+                f1 = children[0]
+                v1 = evalTerm(f1)
+                return v1
 
 def execStatement(env, s):
     if type(s) == Leaf:
@@ -79,6 +90,8 @@ def execStatement(env, s):
                 f = children[0]
                 S = children[1]
                 v = evalFormula(env, f)
+                if not(v):
+                    v = evalLyrics(env, f)
                 (env, o) = execStatement(env, S)
                 return (env, [v] + o)
             if label == 'Play':
@@ -86,8 +99,14 @@ def execStatement(env, s):
                 f = children[0]
                 S = children[1]
                 v = evalFormula(env, f)
-                (env, o) = execStatement(env, p)
-                return (env, o)
+                if not(v):
+                    v = evalLyrics(env, f)
+                (env, o) = execStatement(env, S)
+                v = [str(x) for x in v]
+                
+                v = ' '.join(v).replace("\r",' ').replace("\n",' ')
+                os.popen('say -r 2000 {0}'.format([str(v) + str(o)]))
+                return (env, ['you should hear this'] + o)
 
 def interpret(s):
     tokens = tokenizeAndParse(s)

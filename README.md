@@ -32,6 +32,13 @@ Print the 'personality' of the song Hello by Adele
 >'print sentiment ( lyrics ( artist adele and song hello ) ) ;'
 [[u'Orderliness', u'Assertiveness', u'Excitement-seeking', u'Gregariousness']]
 ```
+
+works on Mac or Linux with XXX package installed
+```
+>'play lyrics (artist adele and song hello ) ;'
+['you should hear this']
+```
+
 ```
 number n :: == natural numbers 
 word   w :: == an English word, song, or artist

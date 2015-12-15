@@ -27,7 +27,6 @@ def word (tokens, top = True):
 
 def tokenizeAndParse(s):
     tokens = tokenize(s)
-    print tokens
     (p, tokens) =  statement(tokens)
     return p
 
@@ -86,7 +85,6 @@ def left(tmp, top = True):
     elif tokens[0] == 'artist':
         return ({'Artist' : [tokens[1]]}, tokens[2:])
     else: 
-         print tokens 
          return None
 
 def term(tmp, top = True):
@@ -122,9 +120,9 @@ def statement(tmp, top = True):
         return ('End', [])
     r = parse([\
         ('Print', ['print', formula, ';' , statement]),\
-        ('Print', ['print', term, ';' , statement]),\
+        ('Print', ['print', lyrics, ';' , statement]),\
         ('Play',  ['play' , formula, ';' , statement]),\
-        ('Print', ['play', term, ';' , statement]),\
+        ('Play',  ['play',  lyrics, ';' , statement]),\
         ('End', [])\
         ], tmp, top)
     if not r is None:
