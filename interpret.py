@@ -62,7 +62,7 @@ def evalFormula(env,f):
                 v1 = evalFormula(env, f1)
                 v2 = evalNumber(env, f2)
                 v3 = evalNumber(env, f3)
-                return v1[v2:v3]
+                return ' '.join((filter(lambda d: len (d) > 0, v1.split(' ')[v2:v3])))
             elif label == 'Mode':
                 f1 = children[0]
                 v1 = evalFormula(env, f1)

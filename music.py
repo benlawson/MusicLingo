@@ -4,6 +4,8 @@ try:
 except:
     import BeautifulSoup as bs
 
+debug = False
+
 hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
        'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
@@ -19,7 +21,7 @@ def firstpage(term, noun='song'):
         term_search = term.replace("_","%20").lower().replace(u'\u0024', 'S').replace(u'\u0026', 'and').replace(u'\u2300', 'o')
 
         search = "http://www.allmusic.com/search/all/" + term_search
-        print search
+        if debug: print search
         req = urllib2.Request(search, headers=hdr)
         x = urllib2.urlopen(req).read()
         #open first page (search)
@@ -38,7 +40,7 @@ def firstpage(term, noun='song'):
 def bothpage(url, song):
         suffix =  '/songs/all/'
         nextpage = url + suffix if suffix not in url else url
-        print nextpage
+        if debug: print nextpage
         req = urllib2.Request(nextpage, headers=hdr)
         x = urllib2.urlopen(req).read()
 
@@ -68,7 +70,7 @@ def secondpage(target_page, adjective='genre'):
         #navigate to main page
         
         req = urllib2.Request(target_page + suffix, headers=hdr)
-        print target_page + suffix
+        if debug: print target_page + suffix
         x = urllib2.urlopen(req).read()
         soup = bs.BeautifulSoup(x)
 
@@ -97,8 +99,12 @@ def secondpage(target_page, adjective='genre'):
             if no_link:
                 return filter(lambda d: len(d) > 0, genre.text.split(' ')) #this should break in Python3 TODO fix this
             if not no_link:
-                 print genre.find_all('a')
-                 for text in genre.find_all('a'):
+                 try:
+                     texts =  genre.find_all('a')
+                 except:
+                     texts =  genre.findAll('a')
+
+                 for text in texts:
                     genre_list.append( (text.string.replace(' ','_')))
         return genre_list
 #eof

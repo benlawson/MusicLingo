@@ -71,6 +71,19 @@ MusicLingo>print genre ( artist taylor swift and song love story) ; print styles
 ['Country Pop/Rock', 'Contemporary_Country Country-Pop Pop']
 ```
 
+Test the 'query optimization' (ask for the single lyrics of two songs)
+```
+MusicLingo> print lyrics ( song hello and song justin ) ;
+[None]
+```
+
+Note, this doesn't affect multiple singers/artist ( I use Adele's first and last names as different artists here )
+```
+MusicLingo> print interval ( lyrics ( song hello and artist adele and artist adkins ) 0 50 ) ;
+['Hello, its me I was wondering if after all these years youd like to meet To go over everything They say that times supposed to heal ya But I aint done much healing Hello, can you hear me?']
+
+```
+
 Play statement: works on Mac or Linux with *gnustep-gui-runtime* package installed
 on Debian-based systems you can install this via:
 ```
