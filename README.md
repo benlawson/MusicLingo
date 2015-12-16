@@ -72,10 +72,11 @@ MusicLingo>print genre ( artist taylor swift and song love story) ; print styles
 ```
 
 Play statement: works on Mac or Linux with *gnustep-gui-runtime* package installed
-on Debian-based systems you install via:
+on Debian-based systems you can install this via:
 ```
 sudo apt-get install gnustep-gui-runtime
 ```
+(play uses the 'say' command line program)
 
 ```
 MusicLingo>play lyrics (artist adele and song hello ) ;
