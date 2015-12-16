@@ -86,7 +86,7 @@ def evalFormula(env,f):
             elif label == 'Sentiment':
                 f1 = children[0]
                 v1 = evalFormula(env, f1)
-                return personality_insights(v1)  
+                return str(' '.join(personality_insights(v1) ))
             elif label == 'Element':
                 f1 = children[0]
                 f2 = children[1]
