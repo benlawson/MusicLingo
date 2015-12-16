@@ -3,7 +3,7 @@
 ####by Ben Lawson
 ==================
 
-The goal of this project is to create an easier way to manipultate music and query it. This language uses data generated from the user-contributed website [allmusic.com](http://www.allmusic.com). The print statement prints to screen and the play function will read aloud the results through your speakers. A simple query optimizer will reduce the number of calls made to the website, by elimating 'null code', code that wouldn't recieve a response anyways.  
+The goal of this project is to create an easier way to manipultate music and query it. This language uses data generated from the user-contributed website [allmusic.com](http://www.allmusic.com). The print statement prints to screen and the play function will read aloud the results through your speakers. A simple query optimizer will reduce the number of calls made to the website, by elimating 'null code', code that wouldn't recieve a response anyways. A type checker checks to make sure everything is properly typed. 
 
 ##Sample Queries
 First, start the MusicLingo interpretor by running the following. Additional setup intructions can be found [here](https://github.com/benlawson/MusicLingo#setup)
@@ -15,23 +15,26 @@ Print a the most common word of a random song by Adele
 MusicLingo> print mode ( lyrics ( song adele ) ) ;
 ['had']
 ```
-You can also pass in a number to find X number of most common words
-```
-MusicLingo> print mode ( lyrics ( song hello ) 10 ) ;
-["you a to (hello hello) I'll lonely that all she"]
-
-```
-
 Print the most common word in the song 'Hello' by Adele
 ```
 MusicLingo> print mode ( lyrics ( artist adele and song hello ) ) ;
 ['you']
 ```
+You can also pass in a number to find X number of most common words
+```
+MusicLingo> print  mode ( lyrics ( artist adele and song hello ) 10 ) ;
+['you I that it Im the to sorry But Ive']
+```
 
-Print the lengh of the song Hotline Bling
+Print the number of words in the song Hotline Bling
 ```
 MusicLingo> print length ( lyrics ( song hotline bling ) ) ;
 [373]
+```
+Print the number of words in X number of most common words (aka X)
+```
+MusicLingo> print  length (mode ( lyrics ( song hotline bling ) 10 ) ) ;
+[10]
 ```
 
 Print the 'personality' of the song Hello by Adele
@@ -161,12 +164,12 @@ python interpret.py
 ```
 
 
-######Easter Egg
+######Options
 in the MusicLingo shell you can change the prompt with the command
 ```
 MusicLingo>:set new_string
 new_string>
 ```
 
-######Future Goals?
-I want to be able to add in a few more control flow operations ( If/Then ) that could interact with the boolean 'Element' formula, but I don't think I'll have time.  
+######Future Goals
+It would be really coool to add a few more control flow operations ( If/Then ) that could interact with the boolean 'Element' formula.

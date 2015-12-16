@@ -2,6 +2,8 @@ exec(open('parse.py').read())
 #exec(open('music.py').read())
 exec(open('sentiment.py').read())
 exec(open('optimize.py').read())
+#exec(open('analyze.py').read())
+from analyze import * 
 from music import *
 from collections import Counter
 import os
@@ -139,8 +141,11 @@ def execStatement(env, s):
 def interpret(s):
     tree = tokenizeAndParse(s)
     tree2 = eliminateDeadCode(tree) 
-    (env, o) = execStatement({}, tree2)
-    return o
+    if typeStatement(tree2)  == 'TyVoid':
+        (env, o) = execStatement({}, tree2)
+        return o
+    else:
+        return 'Not typed correctly'
 
 def interact(s=''):
     prompt = 'MusicLingo>'
