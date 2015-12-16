@@ -96,21 +96,16 @@ def term(tmp, top = True):
     else:
         return (e1, tokens)  
 
-def lyrics(tmp, top =True):
-    tokens = tmp[0:]
-    r =  parse([('Lyrics',  ['lyrics', '(',term, ')'])], tmp, top)
-    if r is not None:
-        return r
-
 def formula(tmp, top = True):
     tokens = tmp[0:]
     r = parse([\
-        ('Length',  ['length', '(', lyrics, ')']),\
-        ('Mode',  ['mode', '(', lyrics, ')']),\
-        ('Modes',  ['mode', '(', lyrics, number, ')']),\
-        ('Sentiment',  ['sentiment', '(', lyrics, ')']),\
-        ('Element',  ['element', '(', word, lyrics,  ')']),\
-        ('Interval',  ['interval', '(', lyrics, number, number, ')']),\
+        ('Lyrics',  ['lyrics', '(',term, ')']),\
+        ('Length',  ['length', '(', formula, ')']),\
+        ('Mode',  ['mode', '(', formula, ')']),\
+        ('Modes',  ['mode', '(', formula, number, ')']),\
+        ('Sentiment',  ['sentiment', '(', formula, ')']),\
+        ('Element',  ['element', '(', word, formula,  ')']),\
+        ('Interval',  ['interval', '(', formula, number, number, ')']),\
         ('Styles',  ['styles',  '(', term, ')']),\
         ('Moods',  ['moods',  '(', term, ')']),\
         ('Genre',  ['genre',  '(', term, ')']),\
@@ -123,9 +118,7 @@ def statement(tmp, top = True):
         return ('End', [])
     r = parse([\
         ('Print', ['print', formula, ';' , statement]),\
-        ('Print', ['print', lyrics, ';' , statement]),\
         ('Play',  ['play' , formula, ';' , statement]),\
-        ('Play',  ['play',  lyrics, ';' , statement]),\
         ('End', [])\
         ], tmp, top)
     if not r is None:

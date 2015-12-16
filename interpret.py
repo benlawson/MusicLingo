@@ -45,55 +45,51 @@ def evalNumber(env, t):
     if type(t) == Num:
          return t 
             
-def evalLyrics(env, t):
-    if type(t) == Node:
-        for label in t:
-            children = t[label]
-            if label == 'Lyrics':
-                f1 = children[0]
-                v1 = evalTerm(env, f1)[1]
-                if v1:
-                    return secondpage(v1, adjective='lyrics') 
-                else:
-                    return None 
-         
 def evalFormula(env,f):
     if type(f) == Node:
         for label in f:
             children = f[label]
             if label == 'Length':
                 f = children[0]
-                f1 = evalLyrics(env, f)
-                return len(f1)  
+                f1 = evalFormula(env, f)
+                return len(f1.split(' '))  
             elif label == 'Interval':
                 f1 = children[0]
                 f2 = children[1]
                 f3 = children[2]
-                v1 = evalLyrics(env, f1)
+                v1 = evalFormula(env, f1)
                 v2 = evalNumber(env, f2)
                 v3 = evalNumber(env, f3)
                 return v1[v2:v3]
             elif label == 'Mode':
                 f1 = children[0]
-                v1 = evalLyrics(env, f1)
+                v1 = evalFormula(env, f1)
+                try:
+                    v1 = v1.split(' ')
+                except:
+                    pass
                 data = Counter(v1)
-                return str(data.most_common(1)[0][0])
+                return  str(data.most_common(1)[0][0])
             elif label == 'Modes':
                 f1 = children[0]
                 f2 = children[1]
-                v1 = evalLyrics(env, f1)
+                v1 = evalFormula(env, f1)
                 v2 = evalNumber(env, f2)
-                data = Counter(v1)
-                return ' '.join([str(x) for x in list(zip(*data.most_common(v2)))[0]]) #might break in Python3 (zip function)
+                try:
+                    data = Counter(filter(lambda d: len (d) > 0, v1.split(' ')))
+                except:
+                    data = Counter(v1)
+                x =  ' '.join([str(x) for x in list(zip(*data.most_common(v2))[0])]) #might break in Python3 (zip function)
+                return x
             elif label == 'Sentiment':
                 f1 = children[0]
-                v1 = evalLyrics(env, f1)
+                v1 = evalFormula(env, f1)
                 return personality_insights(v1)  
             elif label == 'Element':
                 f1 = children[0]
                 f2 = children[1]
                 v1 = evalTerm(env, f1)[1]
-                v2 = evalLyrics(env, f2)
+                v2 = evalFormula(env, f2)
                 return v1 in v2
             elif label == 'Moods':
                 f1 = children[0]
@@ -107,6 +103,16 @@ def evalFormula(env,f):
                 f1 = children[0]
                 v1 = evalTerm(env, f1)[1]
                 return secondpage(v1, adjective='genre') 
+            elif label == 'Lyrics':
+                f1 = children[0]
+                v1 = evalTerm(env, f1)[1]
+                if v1:
+                    v = secondpage(v1, adjective='lyrics') 
+                    v = [str(x) for x in v]
+                    v = ' '.join(v).replace("\r",' ').replace("\n",' ').replace('\'', '')           
+                    return v
+                else:
+                    return None 
 
 def execStatement(env, s):
     if type(s) == Leaf:
@@ -119,30 +125,14 @@ def execStatement(env, s):
                 f = children[0]
                 S = children[1]
                 v = evalFormula(env, f)
-                if type(v) == type(None):
-                    v = evalLyrics(env, f)
-                    lyrics = True
-                else: lyrics = False
-                if type(v) == type(None):
-                    lyrics = False
                 (env, o) = execStatement(env, S)
-                if lyrics:
-                    v = [str(x) for x in v]
-                    v = ' '.join(v).replace("\r",' ').replace("\n",' ')
                 return (env, [v] + o)
             if label == 'Play':
                 children = s[label]
                 f = children[0]
                 S = children[1]
                 v = evalFormula(env, f)
-                if type(v) == type(None):
-                    v = evalLyrics(env, f)
-                    lyrics = True
-                else: lyrics = False
                 (env, o) = execStatement(env, S)
-                if lyrics: 
-                    v = [str(x) for x in v]
-                    v = ' '.join(v).replace("\r",' ').replace("\n",' ').replace('\'', '')
                 os.popen('say {0}'.format([str(v) + str(o)]))
                 return (env, ['you should hear this'] + o)
 

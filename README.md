@@ -99,24 +99,21 @@ left :: ==
      Song w
    | Artist w
      
-lyrics l  :: ==
-    Lyrics (t) 
-   
 formula f :: ==
-     Length (l)
-   | Interval (l n n)
-   | Element (w l) 
-   | Mode (l) 
-   | Mode (l n) 
-   | Sentiment (l) 
+     Lyrics (t) 
+   | Length (f)
+   | Interval (f n n)
+   | Element (w f) 
+   | Mode (f) 
+   | Mode (f n) 
+   | Sentiment (f) 
    | Style (t) 
    | Moods (t) 
+   | Genre (t) 
 
 statement S :: ==
      Print f ; S
-   | Print l ; S
    | Play  f ; S
-   | Play  l ; S
    | 
     
 ```
