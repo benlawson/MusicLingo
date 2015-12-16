@@ -78,6 +78,13 @@ def evalFormula(env,f):
                 v1 = evalLyrics(env, f1)
                 data = Counter(v1)
                 return str(data.most_common(1)[0][0])
+            elif label == 'Modes':
+                f1 = children[0]
+                f2 = children[1]
+                v1 = evalLyrics(env, f1)
+                v2 = evalNumber(env, f2)
+                data = Counter(v1)
+                return ' '.join([str(x) for x in list(zip(*data.most_common(v2)))[0]]) #might break in Python3 (zip function)
             elif label == 'Sentiment':
                 f1 = children[0]
                 v1 = evalLyrics(env, f1)

@@ -14,8 +14,14 @@ Print a the most common word of a random song by Adele
 ```
 MusicLingo> print mode ( lyrics ( song adele ) ) ;
 ['had']
+```
+You can also pass in a number to find X number of most common words
+```
+MusicLingo> print mode ( lyrics ( song hello ) 10 ) ;
+["you a to (hello hello) I'll lonely that all she"]
 
 ```
+
 Print the most common word in the song 'Hello' by Adele
 ```
 MusicLingo> print mode ( lyrics ( artist adele and song hello ) ) ;
@@ -56,12 +62,11 @@ MusicLingo>print genre ( artist taylor swift and song love story) ;
 ['Country Pop/Rock']
 ```
 
-Example of a nested statement (note the structure of the output, a 2-element list)
+Example of a joined statement (note the structure of the output, a 2-element list)
 ```
 MusicLingo>print genre ( artist taylor swift and song love story) ; print styles ( artist taylor swift and song love story ) ; 
 ['Country Pop/Rock', 'Contemporary_Country Country-Pop Pop']
 ```
-
 
 Play statement: works on Mac or Linux with *gnustep-gui-runtime* package installed
 on Debian-based systems you install via:
@@ -102,6 +107,7 @@ formula f :: ==
    | Interval (l n n)
    | Element (w l) 
    | Mode (l) 
+   | Mode (l n) 
    | Sentiment (l) 
    | Style (t) 
    | Moods (t) 
@@ -132,6 +138,7 @@ Using the 'and' term will allow you to chain multiple songs and/or artists, but 
 + Length will return a number that represents the number of words in the lyrics.
 + Interval will return the lyrics between the two number inverals
 + Mode returns the most common word in the lyrics
++ Mode (N), returns the most common N words in lyrics
 + Sentiment uses IBM BlueMix Personality Insights to determine personality keywords to describe the lyrics
 + Styles will return the style of music the term has
 + Element will return a boolean if the word is in the lyrics 
@@ -163,3 +170,6 @@ in the MusicLingo shell you can change the prompt with the command
 MusicLingo>:set new_string
 new_string>
 ```
+
+######Future Goals?
+I want to be able to add in a few more control flow operations ( If/Then ) that could interact with the boolean 'Element' formula, but I don't think I'll have time.  

@@ -107,6 +107,7 @@ def formula(tmp, top = True):
     r = parse([\
         ('Length',  ['length', '(', lyrics, ')']),\
         ('Mode',  ['mode', '(', lyrics, ')']),\
+        ('Modes',  ['mode', '(', lyrics, number, ')']),\
         ('Sentiment',  ['sentiment', '(', lyrics, ')']),\
         ('Element',  ['element', '(', word, lyrics,  ')']),\
         ('Interval',  ['interval', '(', lyrics, number, number, ')']),\
