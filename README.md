@@ -146,11 +146,13 @@ source musicenv/bin/activate
 pip install -r requirements.txt
 wget http://people.bu.edu/balawson/key.txt #for IBM BlueMix credentials
 python interpret.py
+
 ```
 
 
 ######Easter Eggs
 in the MusicLingo shell you can change the prompt with the command
 ```
-:set <expression>
+MusicLingo>:set <expression> 
+<expression>>
 ```
