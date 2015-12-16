@@ -40,7 +40,7 @@ MusicLingo> print  length (mode ( lyrics ( song hotline bling ) 10 ) ) ;
 Print the 'personality' of the song Hello by Adele
 ```
 MusicLingo>print sentiment ( lyrics ( artist adele and song hello ) ) ;
-[[u'Orderliness', u'Assertiveness', u'Excitement-seeking', u'Gregariousness']]
+['Orderliness Assertiveness Excitement-seeking Gregariousness']
 ```
 Check if a word is in the lyrics
 ```
