@@ -105,10 +105,10 @@ formula f :: ==
    | Moods (t) 
 
 statement S :: ==
-     Print f S ; 
-   | Print l S ;
-   | Play  f S ;
-   | Play  l S ;
+     Print f ; S
+   | Print l ; S
+   | Play  f ; S
+   | Play  l ; S
    | 
     
 ```
