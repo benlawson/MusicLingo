@@ -120,14 +120,19 @@ statement S :: ==
 ###Terms:
 + Songs are song titles
 + Artists are artist/band names
+
+
 At the momment only title and names with only one space (max) are supported.
 Using the 'and' term will allow you to chain multiple songs and/or artists, but note that all searchs will be conjunctive, so you may not get exactly what you want. Sometimes less is more.
 
+###Lyrics:
++ use this will term to query the lyrics of a specific one or a random one from a an artist. 
+
 ###Formulas:
-+ Length will return a number that represents the number of words in the song.
++ Length will return a number that represents the number of words in the lyrics.
 + Interval will return the lyrics between the two number inverals
-+ Mode returns the most common word in a song
-+ Sentiment uses IBM BlueMix Personality Insights to determine personality keywords to describe the song.
++ Mode returns the most common word in the lyrics
++ Sentiment uses IBM BlueMix Personality Insights to determine personality keywords to describe the lyrics
 + Styles will return the style of music the term has
 + Element will return a boolean if the word is in the lyrics 
 + Moods will return the moods of music the term has (if there is one)
