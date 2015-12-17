@@ -67,11 +67,20 @@ def secondpage(target_page, adjective='genre'):
         if adjective == 'lyrics': 
            suffix = '/lyrics'
         else: suffix = '' 
+
         #navigate to main page
-        
         req = urllib2.Request(target_page + suffix, headers=hdr)
         if debug: print target_page + suffix
-        x = urllib2.urlopen(req).read()
+        try: 
+            x = urllib2.urlopen(req).read()
+            bio_flag = False
+        except:
+            suffix = '/biography'
+            req = urllib2.Request(target_page + suffix, headers=hdr)
+            if debug: print target_page + suffix
+            x = urllib2.urlopen(req).read()
+            bio_flag = True
+
         soup = bs.BeautifulSoup(x)
 
         #aquire information
@@ -85,6 +94,11 @@ def secondpage(target_page, adjective='genre'):
             tag = 'section'
             attr = 'class'
             query = adjective
+        elif bio_flag:
+            tag = 'div'
+            attr = 'itemprop'
+            query = 'reviewBody'
+            no_link = True
         else:
             tag = 'p'
             attr = 'id'
@@ -97,7 +111,8 @@ def secondpage(target_page, adjective='genre'):
             
         for genre in links:
             if no_link:
-                return filter(lambda d: len(d) > 0, genre.text.split(' ')) #this should break in Python3 TODO fix this
+                body =  filter(lambda d: len(d) > 0, genre.text.split(' ')) #this should break in Python3 TODO fix this
+                return [b.encode('ascii', 'replace').strip() for b in body] 
             if not no_link:
                  try:
                      texts =  genre.find_all('a')
@@ -105,6 +120,6 @@ def secondpage(target_page, adjective='genre'):
                      texts =  genre.findAll('a')
 
                  for text in texts:
-                    genre_list.append( (text.string.replace(' ','_')))
-        return genre_list
+                    genre_list.append( (text.string.replace(' ','_').encode('ascii', 'replace').strip()))
+        return ' '.join((filter(lambda d: len (d) > 0, genre_list)))
 #eof

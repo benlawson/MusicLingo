@@ -10,10 +10,16 @@ First, start the MusicLingo interpretor by running the following. Additional set
 ```
 python interpret.py 
 ```
-Print a the most common word of a random song by Adele
+Print an interval of the biography of Adele (lyrics without a song will return a biography)
 ```
-MusicLingo> print mode ( lyrics ( song adele ) ) ;
-['had']
+MusicLingo> print interval ( lyrics ( artist adele ) 0 15 ) ; 
+['When the U.K. press began dubbing Adele "the next Amy Winehouse" in']
+```
+
+Print a the most common word in the biography of Adele
+```
+MusicLingo> print mode ( lyrics ( artist adele ) );
+['the']
 ```
 Print the most common word in the song 'Hello' by Adele
 ```
@@ -25,7 +31,6 @@ You can also pass in a number to find X number of most common words
 MusicLingo> print  mode ( lyrics ( artist adele and song hello ) 10 ) ;
 ['you I that it Im the to sorry But Ive']
 ```
-
 Print the number of words in the song Hotline Bling
 ```
 MusicLingo> print length ( lyrics ( song hotline bling ) ) ;
@@ -36,7 +41,6 @@ Print the number of words in X number of most common words (aka X)
 MusicLingo> print  length (mode ( lyrics ( song hotline bling ) 10 ) ) ;
 [10]
 ```
-
 Print the 'personality' of the song Hello by Adele
 ```
 MusicLingo>print sentiment ( lyrics ( artist adele and song hello ) ) ;
@@ -47,7 +51,6 @@ Check if a word is in the lyrics
 MusicLingo>print element ( hate lyrics ( artist taylor swift and song love ) ) ;
 [True]
 ```
-
 Check the moods of an artist or song
 ```
 MusicLingo>print moods ( artist taylor swift ) ;
@@ -58,19 +61,16 @@ Check the styles of an artist or song
 MusicLingo>print styles ( artist taylor swift and song love story) ;
 ['Contemporary_Country Country-Pop Pop']
 ```
-
 Check the genre of an artist or song
 ```
 MusicLingo>print genre ( artist taylor swift and song love story) ;
 ['Country Pop/Rock']
 ```
-
 Example of a joined statement (note the structure of the output, a 2-element list)
 ```
 MusicLingo>print genre ( artist taylor swift and song love story) ; print styles ( artist taylor swift and song love story ) ; 
 ['Country Pop/Rock', 'Contemporary_Country Country-Pop Pop']
 ```
-
 Test the 'query optimization' (ask for the single lyrics of two songs)
 ```
 MusicLingo> print lyrics ( song hello and song justin ) ;

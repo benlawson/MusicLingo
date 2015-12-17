@@ -1,10 +1,10 @@
 exec(open('parse.py').read())
-#exec(open('music.py').read())
+exec(open('music.py').read())
 exec(open('sentiment.py').read())
 exec(open('optimize.py').read())
-#exec(open('analyze.py').read())
-from analyze import * 
-from music import *
+exec(open('analyze.py').read())
+#from analyze import * 
+#from music import *
 from collections import Counter
 import os
 
@@ -21,7 +21,10 @@ def evalTerm(env, t):
             children = t[label]
             if label == 'Artist':
                 artist = children[0]
-                return (artist, firstpage(artist, noun='artist') )
+                try: 
+                     return (artist, firstpage(artist, noun='artist') )
+                except:
+                     return (artist, firstpage(artist, noun='song') )
             if label == 'Song':
                 song = children[0]
                 if song:
