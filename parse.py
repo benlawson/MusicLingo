@@ -46,7 +46,7 @@ def tokenizeword(s):
     
 
 def parse(seqs, tmp, top = True):
-    '''basic parser. this is taken from orginally from the hw3 skeleton'''
+    '''basic parser. this is taken from originally from the hw3 skeleton'''
     for (label, seq) in seqs:
         tokens = tmp[0:]
         (ss, es) = ([], [])
@@ -60,7 +60,7 @@ def parse(seqs, tmp, top = True):
                 r = x(tokens, False)
 
 def parse(seqs, tmp, top = True):
-    '''basic parser. this is taken from orginally from the hw3 skeleton'''
+    '''basic parser. this is taken from originally from the hw3 skeleton'''
     for (label, seq) in seqs:
         tokens = tmp[0:]
         (ss, es) = ([], [])

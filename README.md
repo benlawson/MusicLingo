@@ -3,7 +3,7 @@
 ####by Ben Lawson
 ==================
 
-The goal of this project is to create an easier way to manipultate music and query it. This language uses data generated from the user-contributed website [allmusic.com](http://www.allmusic.com). The print statement prints to screen and the play function will read aloud the results through your speakers. A simple query optimizer will reduce the number of calls made to the website, by elimating 'null code', code that wouldn't recieve a response anyways. A type checker checks to make sure everything is properly typed. 
+The goal of this project is to create an easier way to manipultate music and query it. This language uses data generated from the user-contributed website [allmusic.com](http://www.allmusic.com). The print statement prints to screen and the play function will read aloud the results through your speakers. A simple query optimizer will reduce the number of calls made to the website, by elimating 'null code', code that wouldn't receive a response anyways. A type checker checks to make sure everything is properly typed. 
 
 ##Sample Queries
 First, start the MusicLingo interpretor by running the following. Additional setup intructions can be found [here](https://github.com/benlawson/MusicLingo#setup)
